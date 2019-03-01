@@ -1,4 +1,8 @@
 <app-header></app-header>
 <main>
-  <app-post-create></app-post-create>
+  <!-- Listens for postCreated, passing through $event data (the post object) to onPostAdded, which adds it to an array-->
+  <app-post-create (postCreated)="onPostAdded($event)"></app-post-create>
+
+  <!-- passes the array of post objects to the post-list component -->
+  <app-post-list [posts]="storedPosts"></app-post-list>
 </main>
