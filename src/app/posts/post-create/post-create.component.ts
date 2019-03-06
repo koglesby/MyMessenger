@@ -8,7 +8,7 @@ import { PostsService } from "../posts.service";
   styleUrls: ["./post-create.component.css"]
 })
 export class PostCreateComponent {
-  constructor(public postsService: PostsService) {}
+  constructor(public postsService: PostsService) { }
 
   onAddPost(form: NgForm) {
     if (form.invalid) {
@@ -16,5 +16,6 @@ export class PostCreateComponent {
     }
 
     this.postsService.addPost(form.value.title, form.value.enteredContent);
+    form.resetForm();
   }
 }

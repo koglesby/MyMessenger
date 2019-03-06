@@ -2,12 +2,13 @@
   <form #postForm="ngForm" (submit)="onAddPost(postForm)">
     <mat-form-field>
       <!-- form.value.title-->
-      <input matInput type="text" name="title" ngModel required #postTitle="ngModel" />
+      <input matInput type="text" placeholder="Post Title" name="title" ngModel required #postTitle="ngModel" />
       <mat-error *ngIf="postTitle.invalid">Please enter the message title
       </mat-error>
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput rows="2" name="enteredContent" ngModel required #content="ngModel"></textarea>
+      <textarea matInput rows="2" name="enteredContent" ngModel required #content="ngModel"
+        placeholder="Post Content"></textarea>
       <mat-error *ngIf="content.invalid">Write a message </mat-error>
     </mat-form-field>
     <button color="primary" mat-raised-button (click)="onAddPost()" type="submit">
