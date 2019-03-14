@@ -14,10 +14,10 @@ export class PostListComponent implements OnInit, OnDestroy {
   private postsSub: Subscription;
 
   // public keyword will create a new property (postsService) and store incoming value in that property
-  constructor(public postsService: PostsService) {}
+  constructor(public postsService: PostsService) { }
 
   ngOnInit() {
-    this.posts = this.postsService.getPosts();
+    this.postsService.getPosts();
 
     // getPostUpdateListener() returns the updated posts,
     // and with subscribe, whenever they change, it will update posts here as well
