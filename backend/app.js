@@ -1,9 +1,18 @@
 const express = require('express');
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const testCredentials = require('../testCredentials');
 
 const Post = require('./models/post');
 
 const app = express();
+
+mongoose.connect("mongodb://" + testCredentials.username + ":" + testCredentials.password + "@ds221258.mlab.com:21258/mean-messenger-2").then(() => {
+  console.log("connected to mongodb");
+})
+  .catch(() => {
+    console.log("connection failed");
+  });
 
 
 // Middleware
@@ -22,6 +31,9 @@ app.post("/api/posts", (req, res, next) => {
     title: req.body.title,
     content: req.body.content
   });
+
+  // .save() provided by mongoose
+  post.save();
   console.log(post);
   res.status(201).json({ message: 'post added successfully' });
 });
