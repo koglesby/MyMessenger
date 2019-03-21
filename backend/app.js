@@ -38,23 +38,13 @@ app.post("/api/posts", (req, res, next) => {
   res.status(201).json({ message: 'post added successfully' });
 });
 
-// only requests targeting /api/posts will reach this middleware
-app.use('/api/posts', (req, res, next) => {
-  const posts = [
-    {
-      id: 'bchufb32vae',
-      title: 'first server side post',
-      content: 'this post is coming from the server'
-    },
-    {
-      id: 'bsdfafafffa',
-      title: 'second server side post',
-      content: 'this  second post is coming from the server'
-    }
-  ];
-  res.status(200).json({
-    message: 'posts sent succesfully',
-    posts: posts
+
+app.get('/api/posts', (req, res, next) => {
+  Post.find().then(documents => {
+    res.status(200).json({
+      message: 'posts sent succesfully',
+      posts: documents
+    });
   });
 });
 
