@@ -33,9 +33,12 @@ app.post("/api/posts", (req, res, next) => {
   });
 
   // .save() provided by mongoose
-  post.save();
-  console.log(post);
-  res.status(201).json({ message: 'post added successfully' });
+  post.save().then(savedPost => {
+    res.status(201).json({
+      message: 'post added successfully',
+      postId: savedPost._id
+    });
+  });
 });
 
 
