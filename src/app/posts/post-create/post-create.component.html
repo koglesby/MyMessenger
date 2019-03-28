@@ -6,7 +6,7 @@
         type="text"
         placeholder="Post Title"
         name="title"
-        [ngModel]="post.title"
+        [ngModel]="post?.title"
         required
         #title="ngModel"
       />
@@ -19,7 +19,7 @@
         matInput
         rows="2"
         name="content"
-        [ngModel]="post.content"
+        [ngModel]="post?.content"
         required
         #content="ngModel"
         placeholder="Post Content"
