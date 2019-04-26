@@ -26,7 +26,8 @@ export class PostCreateComponent implements OnInit {
       title: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(2)]
       }),
-      content: new FormControl(null, { validators: [Validators.required] })
+      content: new FormControl(null, { validators: [Validators.required] }),
+      image: new FormControl(null, { validators: [Validators.required] })
     });
 
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -51,6 +52,15 @@ export class PostCreateComponent implements OnInit {
         this.postId = null;
       }
     });
+  }
+
+  onImagePicked(event: Event) {
+    // type conversioin / tells typescript it will be an HTMLInputElement, which can have a files property
+    const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({ image: file });
+    this.form.get('image').updateValueAndValidity();
+    console.log(file);
+    console.log(this.form);
   }
 
   onSavePost() {
