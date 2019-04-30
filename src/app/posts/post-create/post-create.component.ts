@@ -60,7 +60,7 @@ export class PostCreateComponent implements OnInit {
   }
 
   onImagePicked(event: Event) {
-    // type conversioin / tells typescript it will be an HTMLInputElement, which can have a files property
+    // type conversion / tells typescript it will be an HTMLInputElement, which can have a files property
     const file = (event.target as HTMLInputElement).files[0];
     this.form.patchValue({ image: file });
     this.form.get('image').updateValueAndValidity();
@@ -78,7 +78,11 @@ export class PostCreateComponent implements OnInit {
     }
     this.isLoading = true;
     if (this.mode === 'create') {
-      this.postsService.addPost(this.form.value.title, this.form.value.content);
+      this.postsService.addPost(
+        this.form.value.title,
+        this.form.value.content,
+        this.form.value.image
+      );
     } else {
       this.postsService.updatePost(
         this.postId,

@@ -3,13 +3,15 @@ import { Observable, Observer } from 'rxjs';
 
 export const mimeType = (
   control: AbstractControl
+  // will return either a Promise or an Observable
 ): Promise<{ [key: string]: any }> | Observable<{ [key: string]: any }> => {
   const file = control.value as File;
   const fileReader = new FileReader();
   const frObs = Observable.create(
     (observer: Observer<{ [key: string]: any }>) => {
       fileReader.addEventListener('loadend', () => {
-        const arr = new Uint8Array(<ArrayBuffer>fileReader.result).subarray(
+        // subarray(0, 4) allows us to get the mimetype
+        const arr = new Uint8Array(fileReader.result as ArrayBuffer).subarray(
           0,
           4
         );
@@ -18,6 +20,7 @@ export const mimeType = (
         for (let i = 0; i < arr.length; i++) {
           header += arr[i].toString(16);
         }
+        // the switch cases represent valid types
         switch (header) {
           case '89504e47':
             isValid = true;
