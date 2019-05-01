@@ -31,16 +31,21 @@ const storage = multer.diskStorage({
 });
 
 router.post('', multer({ storage }).single('image'), (req, res, next) => {
+  const url = req.protocol + '://' + req.get('host');
   const post = new Post({
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    imagePath: url + '/images/' + req.file.filename
   });
 
   // .save() provided by mongoose
   post.save().then(savedPost => {
     res.status(201).json({
       message: 'post added successfully',
-      postId: savedPost._id
+      post: {
+        ...savedPost,
+        id: savedPost._id
+      }
     });
   });
 });

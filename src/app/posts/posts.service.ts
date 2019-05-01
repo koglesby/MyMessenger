@@ -23,7 +23,8 @@ export class PostsService {
             return {
               title: post.title,
               content: post.content,
-              id: post._id
+              id: post._id,
+              imagePath: post.imagePath
             };
           });
         })
@@ -48,17 +49,23 @@ export class PostsService {
   addPost(title: string, content: string, image: File) {
     // const post: Post = { id: null, title, content };
 
+    // Form Data is a format that allows combining text values and blob (File values)
     const postData = new FormData();
     postData.append('title', title);
     postData.append('content', content);
     postData.append('image', image, title);
     this.http
-      .post<{ message: string; postId: string }>(
+      .post<{ message: string; post: Post }>(
         'http://localhost:3000/api/posts',
         postData
       )
       .subscribe(responseData => {
-        const post: Post = { id: responseData.postId, title, content };
+        const post: Post = {
+          id: responseData.post.id,
+          title,
+          content,
+          imagePath: responseData.post.imagePath
+        };
 
         this.posts.push(post);
         this.postsUpdated.next([...this.posts]);
@@ -67,7 +74,7 @@ export class PostsService {
   }
 
   updatePost(id: string, title: string, content: string) {
-    const post: Post = { id, title, content };
+    const post: Post = { id, title, content, imagePath: null };
     this.http
       .put('http://localhost:3000/api/posts/' + id, post)
       .subscribe(response => {
